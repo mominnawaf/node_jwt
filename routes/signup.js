@@ -5,15 +5,17 @@ const bcrypt = require('bcrypt');
 
 
 router.post('/', async(req, res)=> {
-  //Check for new Email
-  const exist= models.findOne({username:req.body.username})
+  const Salt = await bcrypt.genSalt(15);
+  const Pass = await bcrypt.hash(req.body.password, Salt);
+  //Check for new username
+  const exist= await models.findOne({username:req.body.username})
   if (exist){
     res.send("Username Exist");
   }
   else{
    var model = new models({
      username: req.body.username,
-     password: req.body.password,
+     password: Pass,
    });
    try {
      await model.save();
@@ -23,5 +25,6 @@ router.post('/', async(req, res)=> {
    } 
   }
 });
+router.post('/')
 
 module.exports = router;

@@ -6,6 +6,7 @@ var logger = require('morgan');
 const mongoose = require('mongoose');
 
 var signupRouter = require('./routes/signup');
+var loginRouter = require('./routes/login');
 var authRouter = require('./routes/auth');
 
 var app = express();
@@ -29,6 +30,7 @@ mongoose.connect(
 );
 app.use('/', authRouter);
 app.use('/signup', signupRouter);
+app.use("/login", loginRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
