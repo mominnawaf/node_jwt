@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 
 var signupRouter = require('./routes/signup');
 var loginRouter = require('./routes/login');
-var authRouter = require('./routes/auth');
+var postRouter = require('./routes/post');
 
 var app = express();
 
@@ -28,7 +28,7 @@ mongoose.connect(
     console.log("Connected to Db");
   }
 );
-app.use('/', authRouter);
+app.use('/post', postRouter);
 app.use('/signup', signupRouter);
 app.use("/login", loginRouter);
 

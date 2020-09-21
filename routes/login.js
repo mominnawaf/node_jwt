@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const model=require('../models/models');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 router.post('/',async(req,res)=>{
     const user = await model.findOne({username:req.body.username});
     const pass = await bcrypt.compare(req.body.password,user.password)
@@ -12,7 +13,9 @@ router.post('/',async(req,res)=>{
         res.send("Wrong Pass");
     }
     else{
-        res.send("login Success");
+        const token = jwt.sign({_id:user._id},"XYZ");
+        res.header({'auth-token':token});
+        res.send(token);
     }
 })
 module.exports=router;
